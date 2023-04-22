@@ -1,9 +1,9 @@
 //import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 //constants
-import Color from "../../constants/Color";
+import Color from "../../../constants/Color";
 
 //component
 
