@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 //expo
 import Ionicon from "@expo/vector-icons/Ionicons";
 
@@ -68,9 +76,10 @@ const PlayingSreen = ({ numberPicked, onGameOver }) => {
 
   const guessRoundListLenght = guessRounds.length;
 
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
+  const { width, height } = useWindowDimensions();
+
+  let Content = (
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
         <IntructionText style={styles.intructionText}>
@@ -89,11 +98,36 @@ const PlayingSreen = ({ numberPicked, onGameOver }) => {
           </View>
         </View>
       </Card>
-      <View style={styles.listGuessLog}>
-        {/* {guessRounds.map((guess, index) => (
-          <Text key={index}>{guess}</Text>
-        ))} */}
+    </>
+  );
 
+  if (width > 500) {
+    Content = (
+      <>
+        <View style={styles.buttonsContainerLandcape}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={() => handleGuess("lower")}>
+              <Ionicon name="md-remove" />
+            </PrimaryButton>
+          </View>
+
+          <NumberContainer>{currentGuess}</NumberContainer>
+
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={() => handleGuess("higher")}>
+              <Ionicon name="md-add" />
+            </PrimaryButton>
+          </View>
+        </View>
+      </>
+    );
+  }
+
+  return (
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>
+      {Content}
+      <View style={styles.listGuessLog}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={guessRounds}
@@ -114,6 +148,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 24,
+    alignItems: "center",
   },
 
   intructionText: {
@@ -128,8 +163,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  buttonsContainerLandcape: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
   listGuessLog: {
     flex: 1,
+    width: "100%",
     padding: 16,
   },
 });

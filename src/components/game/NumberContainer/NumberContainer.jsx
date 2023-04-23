@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 //constants
 import Color from "../../../constants/Color";
 
@@ -12,10 +12,12 @@ const NumberContainer = ({ children }) => {
   );
 };
 
+const deviceWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   container: {
-    margin: 24,
-    padding: 24,
+    margin: deviceWidth < 380 ? 12 : 24,
+    padding: deviceWidth < 380 ? 12 : 24,
     borderRadius: 8,
     borderWidth: 4,
     borderColor: Color.accent500,
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   numberText: {
-    fontSize: 36,
+    fontSize: deviceWidth < 380 ? 28 : 36,
     color: Color.accent500,
     fontFamily: "open-sans-bold",
   },

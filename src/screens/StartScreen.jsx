@@ -1,6 +1,16 @@
 //import liraries
 import React, { useState } from "react";
-import { Alert, StyleSheet, TextInput, Text, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+  useWindowDimensions,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
 //constants
 import Color from "../constants/Color";
@@ -12,6 +22,10 @@ import Card from "../components/UI/Card";
 import IntructionText from "../components/UI/IntructionText";
 
 const StartScreen = ({ onPickNumber }) => {
+  const { width, height } = useWindowDimensions();
+
+  const marginTop = height < 380 ? 30 : 100;
+
   const [numberEntered, setNumberEntered] = useState("");
 
   const handleChangeNumber = (number) => {
@@ -36,35 +50,44 @@ const StartScreen = ({ onPickNumber }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Title>Guess My Number</Title>
-      <Card>
-        <IntructionText>Enter a Number</IntructionText>
-        <TextInput
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType="number-pad"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={numberEntered}
-          onChangeText={handleChangeNumber}
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
-          </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={handlePressConfirm}>Confirm</PrimaryButton>
-          </View>
+    <ScrollView style={styles.screen}>
+      <KeyboardAvoidingView style={styles.screen} behavior="position">
+        <View style={[styles.container, { marginTop: marginTop }]}>
+          <Title>Guess My Number</Title>
+          <Card>
+            <IntructionText>Enter a Number</IntructionText>
+            <TextInput
+              style={styles.numberInput}
+              maxLength={2}
+              keyboardType="number-pad"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={numberEntered}
+              onChangeText={handleChangeNumber}
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
+              </View>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={handlePressConfirm}>
+                  Confirm
+                </PrimaryButton>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+
   container: {
-    marginTop: 100,
     flex: 1,
     alignItems: "center",
   },

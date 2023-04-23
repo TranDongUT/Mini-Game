@@ -1,6 +1,6 @@
 //import liraries
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Platform } from "react-native";
 
 const Title = ({ children }) => {
   return <Text style={styles.title}>{children}</Text>;
@@ -8,10 +8,15 @@ const Title = ({ children }) => {
 
 const styles = StyleSheet.create({
   title: {
+    width: 300,
+    maxWidth: "80%",
     padding: 12,
     fontSize: 24,
     textAlign: "center",
-    borderWidth: 2,
+    borderWidth: Platform.select({
+      ios: 0,
+      android: 2,
+    }),
     borderColor: "#fff",
     color: "#fff",
     fontFamily: "open-sans-bold",
